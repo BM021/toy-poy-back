@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static '/image/img_ rings.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static '/splide-4.1.3/dist/css/splide.min.css' %}">
+    <link rel="stylesheet" href="{% static '/fonts/stylesheet.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
+    <title>ToyPoy</title>
+</head>
+<body>
+    <!-- Header Start -->
+    <header class="header_container contentBlock">
+        <div class="header">
+            <div class="logo">
+                To’y <img src="{% static '/image/img_ rings.png' %}" alt="">Po’y
+             </div>
+             <div class="menu">
+                 <h3><a href="https://t.me/eldor_alikov">Qayta aloqa</a></h3>
+                 <h3><a href="/uz/all-catalogs">Katalog</a></h3>
+                 <h3><a href="/ru">Ru</a></h3>
+             </div>
+             <i class="mob_menu_icon fa-sharp fa-solid fa-bars"></i>
+        </div>
+        <div class="mob_menu hidden">
+            <ul>
+                <li><a href="https://t.me/eldor_alikov">Qayta aloqa</a></li>
+                <li><a href="/uz/catalog">Katalog</a></li>
+                <li><a style="text-decoration: none;" href="/ru">Ru</a></li>
+            </ul>
+        </div>
+    </header>
+    <!-- Header End -->
+    <!-- Slider Start -->
+        <section class="splide slider1" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                  <ul class="splide__list">
+                      {% for category in all_ru_categories %}
+                      {% if category.id < 7 %}
+                      <li class="splide__slide main">
+                          <a href="uz/catalog/{{ category.name_uz }}"><img src="{{ category.category_photo }}" alt="">
+                        <h3 class="splide__slide__text">{{ category.name_uz }}</h3></a>
+                      </li>
+                      {% endif %}
+                       {% endfor %}
+                  </ul>
+            </div>
+        </section>
+    <!-- Slider End -->
+    <!-- Advertiser start -->
+    <section class="advertiser contentBlock">
+        <div class="advertiser_container">
+            {% for i in ads %}
+            {% if i.id == 1 %}
+                <form action="count" class="advertiser_container_form "  method="post">
+                    {% csrf_token %}
+                    <input type="number" name="id" value="{{ i.id }}" hidden="hidden">
+                    <a href="{{ i.url }}">
+                        <button style="border-radius:23px; border: none; width: 100%; height: 100%;" class="advertiser_container_form " >
+                            <img src="/{{ i.ad_photo }}" alt="">
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <!-- Advertiser End -->
+    <!-- Stars start -->
+    <section class="stars contentBlock">
+        <h3>Yulduzlar</h3>
+        <div class="splide star1" role="group" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list star">
+                    {% for star in all_stars_ru %}
+                    {% if star.id < 6 %}
+                    <li class="splide__slide">
+                        <a style="text-decoration: none;" href="uz/catalog/all-stars">
+                            <img src="{{ star.star_image1 }}" class="star_img"  alt="">
+                            <h4>{{ star.name_uz }}</h4>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="splide__slide">
+                        <a style="text-decoration: none;" href="ru/catalog/all-stars">
+                            <div class="array-next">
+                                <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                            </div>
+                            <h4>Yulduzlar</h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="stars contentBlock">
+        <h3>Etakchi</h3>
+        <div class="splide star2" role="group" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list star">
+                    {% for lead in all_leads_ru %}
+                    {% if lead.id < 6 %}
+                    <li class="splide__slide">
+                        <a style="text-decoration: none;" href="uz/catalog/all-leads">
+                            <img src="{{ lead.image1 }}" class="star_img"  alt="">
+                            <h4>{{ lead.name_uz }}</h4>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="splide__slide">
+                        <a style="text-decoration: none;" href="ru/catalog/all-leads">
+                            <div class="array-next">
+                                <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                            </div>
+                            <h4>Etakchilar</h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="stars contentBlock">
+        <h3>Navbatchi artistlar</h3>
+        <div class="splide star3" role="group" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list star">
+                    {% for duty_artist in all_duty_artists_ru %}
+                    {% if duty_artist.id < 6 %}
+                    <li class="splide__slide">
+                        <a style="text-decoration: none;" href="uz/catalog/all-duty-artists">
+                            <img src="{{ duty_artist.image1 }}" class="star_img"  alt="">
+                            <h4>{{ duty_artist.name_uz }}</h4>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                      <li class="splide__slide">
+                        <a style="text-decoration: none;" href="ru/catalog/all-duty-artists">
+                            <div class="array-next">
+                                <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                            </div>
+                            <h4>Navbatchi honandalar</h4>
+                        </a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- Stars end -->
+    <!-- Others start -->
+    <section class="splide  other" aria-labelledby="carousel-heading">
+        <h2 id="carousel-heading">Boshqa</h2>
+        <div class="splide__track">
+              <ul class="splide__list ">
+                  {% for other in all_others_ru %}
+                  {% if other.id < 7 %}
+                  <li class="splide__slide others_card">
+                      <a style="text-decoration: none;" href="uz/catalog/{{ other.name_uz }}">
+                          <img src="{{ other.image1 }}"  alt="">
+                          <h4>{{ other.name_uz }}</h4>
+                      </a>
+                  </li>
+                  {% endif %}
+                  {% endfor %}
+
+              </ul>
+        </div>
+      </section>
+    <!-- Others end -->
+    <!-- Advertiser start -->
+    <section class="advertiser contentBlock">
+        <div class="advertiser_container">
+            {% for i in ads %}
+            {% if i.id == 2 %}
+                <form action="count" class="advertiser_container_form "  method="post">
+                    {% csrf_token %}
+                    <input type="number" name="id" value="{{ i.id }}" hidden="hidden">
+                    <a href="{{ i.url }}">
+                        <button style="border-radius:23px; border: none; width: 100%; height: 100%;" class="advertiser_container_form " >
+                            <img src="/{{ i.ad_photo }}" alt="">
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <!-- Advertiser End -->
+    <!-- Shop start -->
+
+    <section class="shop contentBlock">
+        <h3>Magazinlar</h3>
+
+        <div class="shop_containre">
+            {% for shop in all_shops %}
+            {% if shop.id < 5 %}
+            <div class="shop_box">
+                <a style="text-decoration: none;" href="uz/catalog/{{ shop.name_uz }}">
+                    <img src="{{ shop.image1 }}" alt="">
+                    <p>{{ shop.name_uz }}</p>
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </section>
+
+    <!-- Shop end -->
+    <!-- Advertiser start -->
+    <section class="advertiser contentBlock">
+        <div class="advertiser_container">
+            {% for i in ads %}
+            {% if i.id == 3 %}
+                <form action="count" class="advertiser_container_form "  method="post">
+                    {% csrf_token %}
+                    <input type="number" name="id" value="{{ i.id }}" hidden="hidden">
+                    <a href="{{ i.url }}">
+                        <button style="border-radius:23px; border: none; width: 100%; height: 100%;" class="advertiser_container_form " >
+                            <img src="/{{ i.ad_photo }}" alt="">
+                        </button>
+                    </a>
+                </form>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <!-- Advertiser End -->
+    <!-- Others start -->
+    <section class="contentBlock">
+        <div class="torts">
+            <div class="shop_containre">
+                <div class="shop_box">
+                    <a style="text-decoration: none;" href="uz/catalog/flowers">
+                        <img src="{% static '/image/Frame 191.png' %}" alt="">
+                        <p>Gular</p>
+                    </a>
+                </div>
+                <div class="shop_box">
+                    <a style="text-decoration: none;" href="uz/catalog/cakes">
+                        <img src="{% static '/image/Frame 191.png' %}" alt="">
+                        <p>Tortlar</p>
+                    </a>
+                </div>
+             </div>
+        </div>
+    </section>
+    <!-- Others end -->
+    <footer class="contentBlock">
+
+        <div class="footer_container">
+            <div class="footer-logo">
+                <div class="logo">
+                    <span>To’y</span> <div><img src="{% static '/image/img_ rings.png' %}" alt=""> </div> <span>Po’y</span>
+                </div>
+                <p>mukammal bayram kafolati</p>
+            </div>
+            <h4>Каталог</h4>
+            <div class="footer_content">
+
+                 <div class="footer_content_boxs">
+                    <div class="footer_content_box left">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Marry Me">Marry Me</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Kortej">Kortej</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Restoranlar">Restoranlar</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Dekor bezatish">Dekor bezatish</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Zargarlik buyumlari">Zargarlik buyumlari</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Sarpa">Sarpa</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Karnay Surnay">Karnay Surnay</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Foto video">Foto video</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Shoular">Shoular</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Animatorlar">Animatorlar</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Poligrafiya">Poligrafiya</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer_content_box center">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/To'y libosi">To'y libosi</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Erkaklar kostyumi">Erkaklar kostyumi</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Go'zallik salonlari">Go'zallik salonlari</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Sartaroshxonalar">Sartaroshxonalar</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/To'y tortlari">To'y tortlari</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Gullar">Gullar</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer_content_box right">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Yulduzlar">Yulduzlar</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Etakchi">Etakchi</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/uz/catalog/Navbatchi artistlar">Navbatchi artistlar</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <h5>©2023</h5>
+    </footer>
+
+
+
+
+    <script src="{% static '/splide-4.1.3/dist/js/splide.min.js' %}"></script>
+    <script src="{% static '/Javascript/main.js' %}"></script>
+   <script>
+        var splide = new Splide( '.splide.slider1',{
+             type   : 'slide',
+            perPage: 4.9,
+            focus  : 'right',
+            pagination:  false,
+            breakpoints: {
+                1200: { perPage: 4, gap: 0 },
+                780 : { perPage: 3.5,gap: 0 },
+                490 : { perPage: 2.9, },
+                400 : { perPage: 2.7, },
+            },
+        } );
+        splide.mount();
+
+        var splide2  = new Splide( '.splide.other',  {
+            type   : 'slide',
+            perPage: 4.5,
+            rewind : true,
+            focus  : 'rigth',
+            pagination:  false,
+            width:'90%',
+             breakpoints: {
+
+                780 : { perPage: 4.2,gap: 0 },
+                490 : { perPage: 3.9, },
+                400 : { perPage: 3.5, },
+            },
+        } );
+        splide2.mount();
+        var splide3 = new Splide( '.splide.star1', {
+            type   : 'slide',
+            perPage: 5.25,
+            width:'100%',
+            gap:2,
+            focus  : 'right',
+            pagination:  false,
+
+        } );
+        splide3.mount();
+
+        // Slider End
+        var splide3 = new Splide( '.splide.star2', {
+            type   : 'slide',
+            perPage: 5.25,
+            width:'100%',
+            gap:2,
+            focus  : 'right',
+            pagination:  false,
+        } );
+        splide3.mount();
+        var splide4 = new Splide( '.splide.star3', {
+            type   : 'slide',
+            perPage: 5.25,
+            width:'100%',
+            height:'260px',
+            gap:2,
+            focus  : 'right',
+            pagination:  false,
+        } );
+        splide4.mount();
+    </script>
+</body>
+</html>

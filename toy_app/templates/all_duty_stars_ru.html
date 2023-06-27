@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static '/image/img_ rings.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static '/splide-4.1.3/dist/css/splide.min.css' %}">
+    <link rel="stylesheet" href="{% static '/fonts/stylesheet.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
+    <link rel="stylesheet" href="{% static '/style/catalog.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>ToyPoy</title>
+</head>
+<body>
+    <!-- Header Start -->
+    <header class="header_container contentBlock">
+        <div class="header">
+            <div class="logo">
+                Той <img src="{% static '/image/img_ rings.png' %}" alt="">Пой
+             </div>
+             <div class="menu">
+                 <h3><a href="/">Главная</a></h3>
+                 <h3><a href="https://t.me/eldor_alikov">Обратная связь</a></h3>
+                 <h3><a style="text-decoration: none;" href="/uz/catalog/all-duty-artists">Uz</a></h3>
+             </div>
+             <i class="mob_menu_icon  fa-sharp fa-solid fa-bars"></i>
+        </div>
+        <div class="mob_menu hidden ">
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="https://t.me/eldor_alikov">Обратная связь</a></li>
+                <li><a style="text-decoration: none;" href="/uz/catalog/all-duty-artists">Uz</a></li>
+            </ul>
+        </div>
+    </header>
+    <!-- Header End -->
+    <section class="catalog">
+        <h2>Каталог организаций</h2>
+        <div class="catalog_menu">
+            {% for i in all_ru_categories %}
+            <span><a style="text-decoration: none; color: #8A966F;" href="/ru/catalog/{{ i.name_ru }}">{{ i }}</a></span>
+            {% endfor %}
+        </div>
+
+        <form action="/search-duty-artist-ru" method="post"  role="search">
+            {% csrf_token %}
+            <div class="catalog_search">
+                <input type="text" name="q" placeholder="Поиск..." >
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="submit" class="searchBtn" value="Найти">
+        </form>
+        <div class="catalog_mobile_container">
+            <div class=" catalog_btn_container contentBlock">
+                <button class="catalog_btn contentBlock">
+                    Выберите категорию
+                </button>
+            </div>
+            <ul class="catalog_menu_mob hidden contentBlock">
+                {% for i in all_ru_categories %}
+                <li><a href="/ru/catalog/{{ i.name_ru }}">{{ i }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <div class="catalog_cards contentBlock">
+        {% for star in page_obj %}
+        <div class="catalog_card">
+            <div class="catalog_card_text">
+               <div class="catalog_card_text_hearer">
+                    <h4 name="top">ТОП</h4>
+               </div>
+
+               <div class="catalog_card_text_container">
+                    <div class="catalog_card_text_logo">
+                        <span style="color: #8A966F;" aria-hidden="true">{{ star.name_ru }}</span>
+                    </div>
+<!--                    <h4>{{ star.name_ru }}</h4>-->
+                    <div class="catalog_adress">
+                        <div class="catalog_card_tel">
+                            <img src="{% static '/image/phone.svg' %}" alt="">
+                            <p>{{ star.phone }}</p>
+                        </div>
+                        <div class="catalog_card_text_contacts">
+                            <div class="catalog_card_text_box">
+                                <img src="{% static '/image/contact1.svg' %}" alt="">
+                                <p><a href="{{ star.site_url }}">Сайт</a></p>
+                            </div>
+                            <div class="catalog_card_text_box">
+                                <img src="{% static '/image/contact2.svg' %}" alt="">
+                                <p><a href="{{ star.telegram_url }}">Telegram</a></p>
+                            </div>
+                            <div class="catalog_card_text_box">
+                                <img src="{% static '/image/contact3.svg' %}" alt="">
+                                <p><a href="{{ star.instagram_url }}">Instagram</a></p>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+
+            </div>
+            <!-- Slider start -->
+            <div class="splide catalog_card_slider" role="group" aria-label="Splide Basic HTML Example">
+                <div class="splide__track">
+
+                    <ul class="splide__list">
+                        <li class="splide__slide"><img src="/{{ star.image1 }}" alt=""></li>
+                        <li class="splide__slide"><img src="/{{ star.image1 }}" alt=""></li>
+                        <li class="splide__slide"><img src="/{{ star.image1 }}" alt=""></li>
+                    </ul>
+
+                </div>
+            </div>
+           <!-- Slider End -->
+        </div>
+        {% endfor %}
+
+        <div class="pagination_container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                      {% if page_obj.has_previous %}
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true"><i class="fa-solid fa-chevron-left"></i></span>
+                    </a>
+                      {% endif %}
+                  </li>
+                  <li class="page-item "><a class="page-link" href="">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</a></li>
+                  <li class="page-item">
+                      {% if page_obj.has_next %}
+
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                      <span aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+                    </a>
+                      {% endif %}
+                  </li>
+                </ul>
+              </nav>
+        </div>
+    </div>
+    <footer class="contentBlock">
+        <div class="footer_container">
+            <div class="footer-logo">
+                <div class="logo">
+                    <span>Той</span> <div><img src="{% static '/image/img_ rings.png' %}" alt=""> </div> <span>Пой</span>
+                </div>
+                <p>залог идеального торжества</p>
+            </div>
+            <div class="footer_content">
+                <h4>Каталог</h4>
+                <div class="footer_content_boxs">
+                    <div class="footer_content_box left">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Marry Me">Marry Me</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Кортеж">Кортеж</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Рестораны">Рестораны</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Декор оформление">Декор оформление</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Ювелирные изделия">Ювелирные издели</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Сарпа">Сарпа</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Карнай Сурнай">Карнай Сурнай</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Фото видео">Фото видео</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Шоу программы">Шоу программы</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Аниматоры">Аниматоры</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Полиграфия">Полиграфия</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer_content_box center">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Свадебные платья">Свадебные платья</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Мужские костюмы">Мужские костюмы</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Салоны красоты">Салоны красоты</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Барбершопы">Барбершопы</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Свадебные торты">Свадебные торты</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Цветы">Цветы</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer_content_box right">
+                        <ul>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Звезды">Звезды</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Ведущие">Ведущие</a></li>
+                            <li><a style="text-decoration: none; color: #EBF5DD;" href="/ru/catalog/Дежурные артисты">Дежурные артисты</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <h5>©2023</h5>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+    <script src="{% static '/Javascript/main.js' %}"></script>
+    <script src="{% static '/splide-4.1.3/dist/js/splide.min.js' %}"></script>
+    <script>
+        let count_slide = document.querySelectorAll('.splide.catalog_card_slider')
+
+        count_slide.forEach((item, some) => {
+            item.className = `${item.className}_${some}`
+            var splide = new Splide( `.splide.catalog_card_slider_${some}`, {
+            pagination:  false,
+            type: 'slider',
+            perPage: 1,
+            perMove: 1,
+            snap:true,
+            cover:true,
+            height:'100%',
+            breakpoints: {
+                1361:{ height: '430px',  gap: 0 },
+                890:{ height: '330px',  gap: 0 },
+                660:{height: '230px',},
+
+            },
+    } );
+    splide.mount();
+            console.log(item.className)
+        })
+
+
+    </script>
+    <script src="{% static '/Javascript/main.js' %}"></script>
+</body>
+
+</html>
+
+
